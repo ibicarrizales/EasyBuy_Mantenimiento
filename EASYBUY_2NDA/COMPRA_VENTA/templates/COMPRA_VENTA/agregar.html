@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'COMPRA_VENTA/img/Easybuy-icon.png' %}">
+    <title>Agregar</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{% static 'COMPRA_VENTA/styles_forms.css'%}">
+    <div class="container">
+        <h1>¡Hola usuario!</h1>
+        <p>¿Quieres agregar un nuevo producto?</p>
+        <form action="{% url 'crear' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ formulario.as_div}}
+            <button type="submit">Subir Producto</button>
+        </form>
+        {{message}}
+        <br>
+        <br>
+        <a href="/homeuser/"><button>Cancelar</button></a>
+    </div>
+</body>
+</html>

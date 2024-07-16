@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Productos</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'COMPRA_VENTA/img/Easybuy-icon.png' %}">
+    
+</head>
+<body>
+    <link rel="stylesheet" href="{% static 'COMPRA_VENTA/styles.css'%}">
+    <section id="header">
+        <a><img src="{% static 'COMPRA_VENTA/img/Easy_buylogo.png' %}" class="logo" style="width: 150px; height: 70px;" ></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="" class="active">Home</a></li>
+                <li><a href="/favoritos/">Lista de Deseos</a></li>
+                <li><a href="/logout/">Log Out</a></li>
+                
+            </ul>
+
+        </div>
+    </section>
+
+    <section id="hero" style="background-image: url('COMPRA_VENTA/static/COMPRA_VENTA/hero_copy.png');">
+        <h4>Explora nuestra gama de celulares avanzados</h4>
+        <h2>Renueva tu experiencia móvil</h2>
+        <h1>Encuentra el tuyo hoy mismo</h1>
+        <p>Ahorra con nuestras ofertas especiales</p>
+
+    </section>
+
+    <section id="opt" class="section-p1">
+        <div class="opt-box">
+            <a href="?view=index">Ver productos</a>
+        </div>
+
+        <div class="filter-container">
+            <form method="GET" action=".">
+                <input type="hidden" name="view" value="index">
+                <label for="fabricante">Filtrar por Fabricante:</label>
+                <input type="text" id="fabricante" name="fabricante" value="{{ fabricante|default:'' }}">
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+        
+    </section>
+
+    <section id="prods" >
+        <h2> Nuestros Productos</h2>
+        <p style="padding-bottom: 30px;">Lo más nuevo del mercado</p>
+        <div class="container">
+            {% for producto in productos %}
+            <div class="product">
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}">
+                {% endif %}
+                <h2>Producto: {{ producto.nombre_producto }}</h2>
+                <p><strong>Fabricante:</strong> {{ producto.fabricante }}</p>
+                <p><strong>Precio:</strong> $ {{ producto.precio }}</p>
+                <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                <p></p>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                    <button type="submit" name="favorito" value="true" style="padding: 10px 10px; border-radius: 20px; background-color: #19456B; -webkit-text-fill-color: aliceblue;">Añadir a Lista de Deseos</button>
+                </form>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+</body>
+</html>
